@@ -4,16 +4,16 @@ const Joi = require("joi");
 const {
   listContacts,
   getContactById,
-  // removeContact,
+  removeContact,
   addContact,
-  // updateContact,
+  updateContact,
 } = require("../../models/contacts");
 
 const { HttpError } = require("../../helpers");
 
-const addShema = Joi.object({
-  name: Joi.string().required().message({
-    "ane.required": `"name" is required`,
+const addSchema = Joi.object({
+  name: Joi.string().required().messages({
+    "any.required": `"name" is required`,
     "string.empty": `"name" cannot be empty`,
     "string.base": `"name" must be string`,
   }),
@@ -54,7 +54,7 @@ router.get("/:contactId", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { error } = addShema.validate(req.body);
+    const { error } = addSchema.validate(req.body);
     if (error) {
       throw HttpError(400, error.message);
     }
@@ -66,11 +66,35 @@ router.post("/", async (req, res, next) => {
 });
 
 router.delete("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+  try {
+    const { contactId } = req.params;
+    const result = await removeContact(contactId);
+    if (!result) {
+      throw HttpError(404, `Contact with ${contactId} not found`);
+    }
+    res.json({
+      message: "Delete success"
+    })
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put("/:contactId", async (req, res, next) => {
-  res.json({ message: "template message" });
+try {
+  const { error } = addSchema.validate(req.body);
+  if (error) {
+    throw HttpError(400, error.message);
+  }
+  const { contactId } = req.params;
+  const result = await updateContact(contactId, req.body);
+  if (!result) {
+    throw HttpError(404, 'Contact not found')
+  }
+  res.json(result);
+} catch (error) {
+  next(error);
+}
 });
 
 module.exports = router;
