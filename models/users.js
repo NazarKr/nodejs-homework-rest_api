@@ -24,10 +24,11 @@ const userSchema = new Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
-    token: String,
-  },
-  { versionKey: false, timeseries: true }
-);
+    token: {
+      type: String,
+      default: ""
+    }
+  }, { versionKey: false, timeseries: true });
 
 userSchema.post("save", handleMongooseError);
 
