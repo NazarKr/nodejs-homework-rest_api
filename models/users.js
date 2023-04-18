@@ -26,9 +26,12 @@ const userSchema = new Schema(
     },
     token: {
       type: String,
-      default: ""
-    }
-  }, { versionKey: false, timeseries: true });
+      default: "",
+    },
+    avatarURL: String,
+  },
+  { versionKey: false, timeseries: true }
+);
 
 userSchema.post("save", handleMongooseError);
 
