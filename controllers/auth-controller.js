@@ -57,8 +57,6 @@ const getCurrent = async (req, res) => {
     name,
     email,
   });
-console.log(email);
-
 }; 
 
 const logout = async (req, res) => {
@@ -81,6 +79,8 @@ const updateSubscription = async (req, res) => {
   }
 
   res.json(result);
+
+  console.log(subscription);
 };
 
 module.exports = {
