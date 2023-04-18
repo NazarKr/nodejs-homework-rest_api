@@ -51,12 +51,12 @@ const login = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-    const { name, email } = req.user;
+  const { name, email } = req.user;
 
-    res.json({
-      name,
-      email,
-    });
+  res.json({
+    name,
+    email,
+  });
 };
 
 const logout = async (req, res) => {
