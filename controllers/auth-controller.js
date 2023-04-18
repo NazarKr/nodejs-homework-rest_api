@@ -57,7 +57,9 @@ const getCurrent = async (req, res) => {
     name,
     email,
   });
-};
+console.log(email);
+
+}; 
 
 const logout = async (req, res) => {
   const { _id } = req.user;
