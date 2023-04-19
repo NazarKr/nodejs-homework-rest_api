@@ -4,6 +4,7 @@ const { User } = require("../models/users");
 const gravatar = require("gravatar");
 const fs = require("fs/promises");
 const path = require("path");
+const Jimp = require("jimp");
 
 const { SECRET_KEY } = process.env;
 
@@ -98,12 +99,16 @@ const updateAvatar = async (req, res) => {
   const { path: tempUpload, filename } = req.file;
   const avatarName = `${_id}_${filename}`;
   const resultUpload = path.join(avatarsDir, avatarName);
+
+  const image = await Jimp.read(tempUpload);
+  await image.resize(250, 250).write(tempUpload);
+
   await fs.rename(tempUpload, resultUpload);
   const avatarURL = path.join("avatar", avatarName);
   await User.findByIdAndUpdate(_id, { avatarURL });
 
   res.json({ avatarURL });
-}
+};
 
 module.exports = {
   register: ctrlWrapper(register),
