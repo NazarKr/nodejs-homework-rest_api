@@ -36,16 +36,15 @@ const register = async (req, res) => {
   const verifyEmail = {
     to: email,
     subject: "Verify email",
-    // html: `<a target="_blanc" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
-    html: `<a href="https:localhost:3000/api/users/verify${verificationToken}">Confirm</>`,
+    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}" >Click here to verify your email</a>`,
   };
 
-    try {
-      await sendEmail(verifyEmail);
-    } catch (error) {
-      // Handle email sending error
-      throw HttpError(500, "Failed to send verification email");
-    }
+try {
+  await sendEmail(verifyEmail);
+} catch (error) {
+  console.log(error);
+  throw HttpError(500, "Failed to send verification email");
+}
 
   res.status(201).json({
     email: newUser.email,
