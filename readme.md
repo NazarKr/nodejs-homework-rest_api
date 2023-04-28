@@ -1,6 +1,7 @@
 **Routes<br>**
 
 **Authenticate:<br>**
+
 **POST /register:** Creates a new user account. Accepts a JSON payload containing the user's email and password. Performs validation of the request body against the registerSchema defined in the users model. Calls the register controller function to handle the registration process.
 
 **GET /verify/:verificationToken:** Verifies the user's email address using the provided verification token. Calls the verify controller function to handle the verification process.
