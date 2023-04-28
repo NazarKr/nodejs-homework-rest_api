@@ -55,10 +55,15 @@ try {
 
 const verify = async(req, res) => {
   const { verificationToken } = req.params;
+
+  console.log("verificationToken:", verificationToken);//
+  
   const user = await User.findOne({ verificationToken });
-    console.log("User:", user);
+
+  console.log("User:", user);//
+  
   if (!user) {
-    console.log("User not found:", verificationToken);
+    console.log("User not found:", verificationToken);//
     throw HttpError(404, "Email not found");
   }
 

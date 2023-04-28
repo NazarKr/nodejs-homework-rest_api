@@ -69,7 +69,7 @@ const schemas = {
   updateSubscriptionSchema,
 };
 
-const User = model("users", userSchema);
+const User = model("user", userSchema);
 
 module.exports = {
   schemas,
