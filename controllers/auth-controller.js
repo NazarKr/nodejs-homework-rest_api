@@ -15,7 +15,7 @@ const { ctrlWrapper } = require("../utils");
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const register = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -31,7 +31,6 @@ const register = async (req, res) => {
     password: hashPassword,
     avatarURL,
     verificationToken,
-    name
   });
 
   const verifyEmail = {
