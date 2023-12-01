@@ -8,7 +8,7 @@ const addSchema = Joi.object({
     "string.empty": `"name" cannot be empty`,
     "string.base": `"name" must be string`,
   }),
-  email: Joi.string().required().messages({
+  email: Joi.string().messages({
     "any.required": `"email" is required`,
     "string.empty": `"email" cannot be empty`,
     "string.base": `"email" must be string`,

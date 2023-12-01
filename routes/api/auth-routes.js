@@ -13,7 +13,7 @@ router.post("/resend-verify-email", validateBody(schemas.emailSchema), ctrl.rese
 
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login);
 
-router.get("/users/current", authenticate, ctrl.getCurrent);
+router.get("/current", authenticate, ctrl.getCurrent);
 
 router.post("/logout", authenticate, ctrl.logout);
 
