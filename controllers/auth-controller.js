@@ -49,18 +49,18 @@ try {
   res.status(201).json({
     email: newUser.email,
     name: newUser.name,
-    
+    message: "<h1>Open Email for verify</h1>",
   });
 };
 
 const verify = async(req, res) => {
   const { verificationToken } = req.params;
 
-  console.log("verificationToken:", verificationToken);//
+  // console.log("verificationToken:", verificationToken);
   
   const user = await User.findOne({ verificationToken });
 
-  console.log("User:", user);//
+  // console.log("User:", user);
   
   if (!user) {
     console.log("User not found:", verificationToken);//
@@ -131,12 +131,16 @@ const login = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-  const { name, email } = req.user;
+  const { email } = req.user;
+  const user = await User.findOne({ email });
+
 
   res.json({
-    name,
+    user,
     email,
   });
+
+  console.log(user);
 }; 
 
 const logout = async (req, res) => {
