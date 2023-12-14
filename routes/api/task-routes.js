@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/", authenticate, ctrl.getAllTasks);
 
-// router.get("/:contactId", authenticate, ctrl.getById);
+// router.get("/:taskId", authenticate, ctrl.getById);
 
 router.post(
   "/",
@@ -17,7 +17,7 @@ router.post(
   ctrl.addTasks
 );
 
-// router.put("/:contactId", authenticate, ctrl.getById);
+// router.put("/:taskId", authenticate, ctrl.getById);
 
 router.patch("/:taskId/status", authenticate, ctrl.updateStatusTasks);
 

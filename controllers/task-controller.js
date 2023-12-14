@@ -41,7 +41,6 @@ const updateStatusTasks = async (req, res) => {
     throw HttpError(404, `Contact with ${taskId} not found`);
   }
   res.status(200).json(result);
-  console.log(result);
 };
 
 const deleteTasks = async (req, res) => {

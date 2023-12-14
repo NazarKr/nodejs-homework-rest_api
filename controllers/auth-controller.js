@@ -55,13 +55,9 @@ try {
 
 const verify = async(req, res) => {
   const { verificationToken } = req.params;
-
-  // console.log("verificationToken:", verificationToken);
-  
+ 
   const user = await User.findOne({ verificationToken });
-
-  // console.log("User:", user);
-  
+ 
   if (!user) {
     console.log("User not found:", verificationToken);//
     throw HttpError(404, "Email not found");
@@ -153,24 +149,26 @@ const logout = async (req, res) => {
 };
 
 const updateSubscription = async (req, res) => {
+  const { email } = req.user;
   const { subscription } = req.body;
-  const { _id } = req.user;
 
-  const result = await User.findByIdAndUpdate(_id, { subscription }, {new: true,});
+   console.log(email);
+  
+  const result = await User.findOneAndUpdate({ email }, req.body, {
+    subscription: !subscription,
+  });
 
   if (!result) {
-    throw HttpError(404);
+    throw HttpError(404, `Contact with ${email} not found`);
   }
 
   res.json(result);
-
-  console.log(subscription);
 };
 
 const updateAvatar = async (req, res) => {
-  const { _id } = req.user;
+  const { email } = req.user;
   const { path: tempUpload, filename } = req.file;
-  const avatarName = `${_id}_${filename}`;
+  const avatarName = `${email}_${filename}`;
   const resultUpload = path.join(avatarsDir, avatarName);
 
   const image = await Jimp.read(tempUpload);
@@ -178,7 +176,7 @@ const updateAvatar = async (req, res) => {
 
   await fs.rename(tempUpload, resultUpload);
   const avatarURL = path.join("avatar", avatarName);
-  await User.findByIdAndUpdate(_id, { avatarURL });
+  await User.findOneAndUpdate(email, { avatarURL });
 
   res.json({ avatarURL });
 };
